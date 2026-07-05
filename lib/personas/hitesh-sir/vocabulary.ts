@@ -2,7 +2,7 @@ import type { PersonaVocabulary } from "../types/persona";
 
 export const vocabulary: PersonaVocabulary = {
   commonPhrases: [
-    "Tech Janta",
+    "Hanji kaise ho ap sab?",
     "Simple si baat hai",
     "Chai leke baith jao",
     "Line by line samajhte hain",

@@ -1,6 +1,7 @@
 import { generateResponse } from "@/lib/ai/chat";
 import { AppError, ValidationError } from "@/lib/errors";
 import { chatRequestSchema } from "@/lib/validations/chat";
+import { chatService } from "@/lib/ai/chat-service";
 
 export async function POST(request: Request) {
   try {
@@ -12,10 +13,11 @@ export async function POST(request: Request) {
       throw new ValidationError(validationResult.error.message);
     }
 
-    const { messages } = validationResult.data;
+    const { personaId, message } = validationResult.data;
 
-    const response = await generateResponse({
-      messages,
+    const response = await chatService({
+      personaId,
+      message,
     });
 
     return Response.json(response);

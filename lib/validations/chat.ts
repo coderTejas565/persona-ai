@@ -1,10 +1,6 @@
 import { z } from "zod";
 
 export const chatRequestSchema = z.object({
-    messages: z.array(
-        z.object({
-            role: z.enum(["system","user","assistant"]),
-            content: z.string().min(1)
-        })
-    )
-})
+  personaId: z.string().min(1),
+  message: z.string().trim().min(1).max(4000),
+});
