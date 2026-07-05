@@ -30,8 +30,26 @@ export interface PersonaVocabulary {
   recurringWords: string[];
 }
 
+export type ExampleCategory =
+  | "concept"
+  | "debugging"
+  | "project"
+  | "career"
+  | "motivation"
+  | "system-design"
+  | "backend"
+  | "genai";
+
+export interface PersonaExample {
+  category: ExampleCategory;
+
+  user: string;
+
+  assistant: string;
+}
+
 export interface PersonaExamples {
-  goodResponses: string[];
+  goodResponses: PersonaExample[];
 }
 
 export interface Persona {
