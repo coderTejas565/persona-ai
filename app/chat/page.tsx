@@ -25,7 +25,6 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [switching, setSwitching] = useState(false);
 
-  // ✅ SAFE PERSONA SWITCH HANDLER (NO useEffect state loop)
   const handlePersonaChange = useCallback((newPersona: Persona) => {
     if (newPersona === persona) return;
 

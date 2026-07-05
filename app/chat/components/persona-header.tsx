@@ -1,9 +1,9 @@
 "use client";
 
 import { Persona } from "../page";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { personaProfile } from "@/lib/personas/profile";
+import { cn } from "@/lib/utils";
 
 export function PersonaHeader({
   persona,
@@ -12,56 +12,65 @@ export function PersonaHeader({
   persona: Persona;
   setPersona: (p: Persona) => void;
 }) {
+  const active = personaProfile[persona];
+
   return (
     <div className="border-b bg-background/80 backdrop-blur-md px-5 py-4 flex items-center justify-between">
 
       {/* LEFT SIDE */}
-      <div className="flex flex-col">
-        <div className="flex items-center gap-3">
-          <h1 className="font-semibold text-lg tracking-tight">
-            Persona
-          </h1>
+      <div className="flex items-center gap-3">
 
-          <Badge
-            className="text-xs"
-            variant="secondary"
-          >
-            {persona === "hitesh" ? "Hitesh Sir" : "Piyush Sir"}
-          </Badge>
+        {/* AVATAR */}
+        <div className="relative">
+          <img
+            src={active.avatar}
+            className="w-10 h-10 rounded-full shadow-sm border"
+          />
+
+          {/* active glow */}
+          <span className="absolute inset-0 rounded-full ring-2 ring-primary/30 animate-pulse" />
         </div>
 
-        <p className="text-xs text-muted-foreground mt-1">
-          Switch mentors to see different thinking styles: fundamentals vs system design
-        </p>
+        {/* TEXT */}
+        <div className="flex flex-col">
+          <h1 className="font-semibold text-base">
+            {active.name}
+          </h1>
+
+          <p className="text-xs text-muted-foreground">
+            AI Mentor Chat • Switch thinking styles instantly
+          </p>
+        </div>
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
 
-        {/* SEGMENTED PERSONA SWITCH */}
+        {/* SEGMENTED SWITCH */}
         <div className="flex items-center p-1 bg-muted rounded-xl border">
 
-          <button
-            onClick={() => setPersona("hitesh")}
-            className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
-              persona === "hitesh"
-                ? "bg-primary text-white shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Hitesh Sir
-          </button>
+          {(["hitesh", "piyush"] as const).map((p) => {
+            const profile = personaProfile[p];
 
-          <button
-            onClick={() => setPersona("piyush")}
-            className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
-              persona === "piyush"
-                ? "bg-primary text-white shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Piyush Sir
-          </button>
+            return (
+              <button
+                key={p}
+                onClick={() => setPersona(p)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg transition-all",
+                  persona === p
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <img
+                  src={profile.avatar}
+                  className="w-5 h-5 rounded-full"
+                />
+                {profile.name.split(" ")[0]}
+              </button>
+            );
+          })}
         </div>
 
         <ThemeToggle />
