@@ -1,9 +1,11 @@
 import { hiteshPersona } from "@/lib/personas/hitesh-sir/index";
+import { piyushPersona } from "../personas/piyush-sir";
 import type { Persona } from "@/lib/personas/types/persona";
 import { PersonaNotFoundError } from "@/lib/errors/persona-not-found-error";
 
 const personas: Record<string, Persona> = {
   hitesh: hiteshPersona,
+  piyush: piyushPersona
 };
 
 export function loadPersona(personaId: string): Persona {
