@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { personaProfile } from "@/lib/personas/profile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,14 +35,24 @@ export function SandboxChat() {
       content: "Ask anything — see how each mentor thinks differently.",
     },
   ]);
+
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const profile = personaProfile[persona];
 
   function sleep(ms: number) {
     return new Promise((r) => setTimeout(r, ms));
   }
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages, loading]);
 
   async function streamText(text: string) {
     let current = "";
@@ -59,7 +69,7 @@ export function SandboxChat() {
         return copy;
       });
 
-      await sleep(8);
+      await sleep(10);
     }
   }
 
@@ -100,11 +110,11 @@ export function SandboxChat() {
             Interactive Mentor Sandbox
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Switch perspective — fundamentals vs system thinking
+            Switch mindset — fundamentals vs system thinking
           </p>
         </div>
 
-        {/* PERSONA SWITCH (glass + glow) */}
+        {/* PERSONA SWITCH */}
         <div className="flex items-center gap-1 p-1 rounded-2xl border bg-background/30 backdrop-blur-xl shadow-md">
           {(["hitesh", "piyush"] as const).map((p) => (
             <button
@@ -127,22 +137,18 @@ export function SandboxChat() {
       <motion.div
         layout
         className={cn(
-          "relative rounded-3xl border backdrop-blur-2xl shadow-2xl p-5 h-[500px] overflow-hidden",
-          persona === "hitesh"
-            ? "bg-orange-50/30"
-            : "bg-blue-50/20"
+          "relative rounded-3xl border shadow-2xl p-5 h-[500px] overflow-hidden backdrop-blur-2xl",
+          "bg-gradient-to-b from-background/60 to-background/20"
         )}
       >
+        {/* glow layer */}
+        <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
 
-        {/* GLOW LAYER */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none" />
-
-        {/* INNER BORDER LIGHT */}
-        <div className="absolute inset-0 rounded-3xl border border-white/10 pointer-events-none" />
-
-        {/* MESSAGES */}
-        <div className="relative h-full overflow-y-auto space-y-4 pr-2">
-
+        {/* messages */}
+        <div
+          ref={scrollRef}
+          className="relative h-full overflow-y-auto space-y-4 pr-2"
+        >
           <AnimatePresence initial={false}>
             {messages.map((msg, i) => (
               <motion.div
@@ -150,10 +156,7 @@ export function SandboxChat() {
                 initial={{ opacity: 0, y: 12, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{
-                  duration: 0.25,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
+                transition={{ duration: 0.25 }}
                 className={cn(
                   "flex w-full",
                   msg.role === "user" ? "justify-end" : "justify-start"
@@ -176,12 +179,12 @@ export function SandboxChat() {
             ))}
           </AnimatePresence>
 
-          {/* TYPING INDICATOR (DOTS STYLE) */}
+          {/* typing */}
           {loading && (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground animate-pulse">
-              <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" />
-              <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-75" />
-              <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-150" />
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" />
+              <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce delay-75" />
+              <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce delay-150" />
             </div>
           )}
         </div>
@@ -200,7 +203,6 @@ export function SandboxChat() {
             bg-background/40 backdrop-blur-md
             border border-border/60
             focus-visible:ring-2 focus-visible:ring-primary/30
-            transition
           "
         />
 
@@ -212,7 +214,6 @@ export function SandboxChat() {
             Send
           </Button>
         </motion.div>
-
       </div>
     </section>
   );
