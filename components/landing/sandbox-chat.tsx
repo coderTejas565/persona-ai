@@ -32,7 +32,7 @@ export function SandboxChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Ask anything — see how each mentor thinks differently.",
+      content: "Ask anything see how each mentor thinks differently.",
     },
   ]);
 
@@ -110,7 +110,7 @@ export function SandboxChat() {
             Interactive Mentor Sandbox
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Switch mindset — fundamentals vs system thinking
+            Switch mindset - fundamentals vs system thinking
           </p>
         </div>
 

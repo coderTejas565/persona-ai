@@ -74,7 +74,7 @@ export function Footer() {
           <p className="font-medium">Built by</p>
 
           <p className="text-sm text-muted-foreground">
-            Tejas (Builder Mode 🚀)
+            Tejas 
           </p>
 
           <div className="inline-flex items-center gap-2 text-xs text-muted-foreground mt-2">

@@ -22,7 +22,7 @@ export function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border bg-background/50 backdrop-blur-xl text-xs text-muted-foreground shadow-sm"
         >
-          ⚡ Two AI mentors • Two ways of thinking
+           Two AI mentors • Two ways of thinking
         </motion.div>
 
         {/* MAIN HEADING (split reveal for premium feel) */}
@@ -59,7 +59,7 @@ export function Hero() {
           className="mt-8 text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
         >
           One mentor builds fundamentals. The other breaks real-world systems,
-          tradeoffs, and scale decisions — just like production engineering.
+          tradeoffs, and scale decisions just like production engineering.
         </motion.p>
 
         {/* CTA (premium stagger feel) */}

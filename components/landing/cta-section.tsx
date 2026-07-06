@@ -67,7 +67,7 @@ export function CTASection() {
         >
           Switch between Hitesh Sir and Piyush Sir instantly.
           Learn fundamentals, system design, and real-world engineering thinking
-          through conversation — not theory.
+          through conversation not theory.
         </motion.p>
 
         {/* BUTTONS */}
@@ -78,7 +78,7 @@ export function CTASection() {
           className="flex items-center justify-center gap-4 pt-2"
         >
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-            <Button size="lg" className="rounded-xl px-7 py-6 shadow-md">
+            <Button size="lg" className="rounded-xl px-7 py-6 shadow-md" onClick={() => (window.location.href = "/chat")}>
               Start Free Chat
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
